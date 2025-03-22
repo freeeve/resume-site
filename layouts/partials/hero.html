@@ -1,0 +1,6 @@
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="hero-container" data-aos="fade-in">
+        <h1>{{ .Site.Params.name }}</h1>
+        <p>I am <span class="typed" data-typed-items="{{ range .Site.Params.roles }}{{ . }},{{ end }}"></span><span class="typed-cursor" aria-hidden="true"></span></p>
+    </div>
+</section>

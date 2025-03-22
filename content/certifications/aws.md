@@ -1,0 +1,25 @@
+---
+Issuer: "AWS"
+Links:
+  - title: "AWS Certified Solutions Architect - Professional"
+    url: "https://www.credly.com/badges/8841947f-d129-4f42-8d9b-4dee9797b9d2"
+    img: "https://images.credly.com/size/680x680/images/2d84e428-9078-49b6-a804-13c15383d0de/image.png"
+    date: "2024-01-11"
+  - title: "AWS Certified DevOps Engineer – Professional"
+    url: "https://www.credly.com/badges/989aedb6-fb39-4f5d-9e7c-fbc5f4be4b5e"
+    img: "https://images.credly.com/size/680x680/images/bd31ef42-d460-493e-8503-39592aaf0458/image.png"
+    date: "2024-02-01"
+  - title: "AWS Certified Database – Specialty"
+    url: "https://www.credly.com/badges/384f03a2-b553-439a-8e6e-e88fce7c2f79"
+    img: "https://images.credly.com/size/680x680/images/885d38e4-55c0-4c35-b4ed-694e2b26be6c/image.png"
+    date: "2023-09-25"
+  - title: "AWS Certified Data Analytics – Specialty"
+    url: "https://www.credly.com/badges/a410a631-1290-4a0f-803c-4c234b78b286"
+    img: "https://images.credly.com/size/680x680/images/6430efe4-0ac0-4df6-8f1b-9559d8fcdf27/image.png"
+    date: "2023-10-26"
+  - title: "AWS Certified Machine Learning – Specialty"
+    url: "https://www.credly.com/badges/93d13425-06ce-4ba9-826d-2842b6707ed8"
+    img: "https://images.credly.com/size/680x680/images/778bde6c-ad1c-4312-ac33-2fa40d50a147/image.png"
+    date: "2023-12-21"
+weight: 1
+---

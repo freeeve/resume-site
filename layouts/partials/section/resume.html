@@ -1,0 +1,9 @@
+<section id="resume">
+    <div class="container">
+        {{ with .Site.GetPage "/resume" }}
+        <a href="{{ .Params.resumeLink | relURL }}" type="button" target="_blank" class="btn btn-primary" download=""><i class="bx bxs-download"></i> {{ .Params.resumeText }}</a>
+        {{ else }}
+        <a href="{{ .Site.Params.resumeLink | relURL }}" type="button" target="_blank" class="btn btn-primary" download=""><i class="bx bxs-download"></i> {{ .Site.Params.resumeText }}</a>
+        {{ end }}
+    </div>
+</section>

@@ -1,0 +1,21 @@
+<section id="projects" class="resume">
+    <div class="container">
+        <div class="section-title">
+            <h2>Projects</h2>
+        </div>
+        <div class="row">
+            {{ range .Site.RegularPages }}
+            {{ if eq .Page.Section "projects"}}
+            <div class="col-lg-6">
+                <div class="resume-item">
+                    <h4>{{ .Title }}</h4>
+                    {{ if .Params.Url }}<h4><a href="https://{{ .Params.Url }}">{{ .Params.Url }}</a></h4>{{ end }}
+                    <h5>{{ .Params.dates }}</h5>
+                    {{ .Content }}
+                </div>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</section>

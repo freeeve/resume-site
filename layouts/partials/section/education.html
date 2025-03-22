@@ -1,0 +1,24 @@
+<section id="education" class="resume">
+    <div class="container">
+        <div class="section-title">
+            <h2>Education</h2>
+        </div>
+        <div class="row">
+            {{ range .Site.RegularPages }}
+            {{ if eq .Page.Section "education"}}
+            <div class="col-lg-8">
+                <div class="resume-item">
+                    <h4>{{ .Title }}</h4>
+                    <h5>{{ .Params.Year }}</h5>
+                    <p><em>{{ .Params.Institution }}</em></p>
+                    {{ .Content }}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <img class="wgu-logo" src="{{ .Params.Img }}" alt="{{ .Params.Institution }}">
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+    </div>
+</section>

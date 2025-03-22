@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{ partial "head.html" . }}
+    <body data-aos-easing="ease-in-out" data-aos-duration="1000" data-aos-delay="0">
+        <!-- Mobile nav toggle -->
+        <i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+
+        <!-- Header -->
+        {{ partial "header.html" . }}
+
+        <!-- Hero Section -->
+        {{ partial "hero.html" . }}
+
+        <main id="main">
+            <!-- Dynamic Sections -->
+            {{ partial "section/about.html" . }}
+            {{ partial "section/experience.html" . }}
+            {{ partial "section/projects.html" . }}
+            {{ partial "section/education.html" . }}
+            {{ partial "section/certifications.html" . }}
+            {{ partial "section/competencies.html" . }}
+            {{ partial "section/contact.html" . }}
+            {{ partial "section/resume.html" . }}
+        </main>
+
+        <!-- Back to Top -->
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+                class="bi bi-arrow-up-short"></i></a>
+
+        <!-- Vendor JS -->
+        {{ partial "scripts.html" . }}
+    </body>
+</html>

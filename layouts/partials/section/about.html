@@ -1,0 +1,15 @@
+<section id="about" class="about">
+    <div class="container">
+        <div class="section-title"><h2>About</h2></div>
+        <div class="row">
+            <div class="col-lg-4" data-aos="fade-right">
+                <img src="{{ "assets/img/eve-profile.jpeg" | relURL }}" class="img-fluid" alt="Eve's Photo">
+            </div>
+            <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
+                <h3>{{ .Site.Params.jobTitle }}</h3>
+                <p class="fst-italic">{{ .Site.Params.tagline }}</p>
+                {{ .Content }}
+            </div>
+        </div>
+    </div>
+</section>

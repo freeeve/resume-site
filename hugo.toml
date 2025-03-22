@@ -1,0 +1,87 @@
+baseURL = 'https://eve.freemaq.org/'
+languageCode = 'en-us'
+title = "Eve Freeman's Resume"
+
+[taxonomies]
+tag = ""
+category = ""
+
+[params]
+name = "Eve Freeman"
+jobTitle = "LEAD SOFTWARE ENGINEER / FULLSTACK ENGINEER / DATA ENGINEER / API ENGINEER / FINOPS ENGINEER / AI ENGINEER"
+tagline = ""
+roles = ["a Lead Software Engineer", "a Full-Stack Engineer", "an AWS Engineer", "a Cloud Engineer", "a Data Engineer",
+    "a Problem Solver", "an AI Engineer", "a Security Engineer", "a FinOps Engineer"]
+email = "eve@freemaq.org"
+location = "Northern Shenandoah Mountains, Virginia"
+resumeLink = "assets/Resume.of.Eve.Freeman.pdf"  # Added for Resume Section (adjust the file name as needed)
+resumeText = "Download My Resume"  # Optional, customize if desired
+
+
+
+[[params.social]]
+url = "https://www.linkedin.com/in/freeeve/"
+class = "linkedin"
+icon = "bx bxl-linkedin"
+[[params.social]]
+url = "https://github.com/freeeve/"
+class = "github"
+icon = "bx bxl-github"
+[[params.social]]
+url = "https://stackoverflow.com/users/683201/eve-freeman?tab=summary"
+class = "stackoverflow"
+icon = "bx bxl-stack-overflow"
+
+[[menu.main]]
+identifier = "hero"
+name = "Home"
+pre = "bx bx-home"
+weight = 1
+
+[[menu.main]]
+identifier = "about"
+name = "About"
+pre = "bx bx-user"
+weight = 2
+
+[[menu.main]]
+identifier = "experience"
+name = "Work Highlights"
+pre = "bx bx-briefcase"
+weight = 3
+
+[[menu.main]]
+identifier = "projects"
+name = "Projects"
+pre = "bx bx-book-content"
+weight = 4
+
+[[menu.main]]
+identifier = "education"
+name = "Education"
+pre = "bx bx-book"
+weight = 5
+
+[[menu.main]]
+identifier = "certifications"
+name = "Certifications"
+pre = "bx bx-award"
+weight = 6
+
+[[menu.main]]
+identifier = "competencies"
+name = "Specialties"
+pre = "bx bx-star"
+weight = 7
+
+[[menu.main]]
+identifier = "contact"
+name = "Contact"
+pre = "bx bx-envelope"
+weight = 8
+
+[[menu.main]]
+identifier = "resume"
+name = "Resume"
+pre = "bx bx-file"
+weight = 9

@@ -1,0 +1,21 @@
+<header id="header">
+    <div class="d-flex flex-column">
+        <div class="profile">
+            <img src="{{ "assets/img/eve-profile.jpeg" | relURL }}" alt="Professional Headshot" class="img-fluid rounded-circle">
+            <h1 class="text-light"><a href="/static">{{ .Site.Params.name }}</a></h1>
+            <div class="social-links mt-3 text-center">
+                {{ range .Site.Params.social }}
+                <a href="{{ .url }}" target="_blank" class="{{ .class }}"><i class="{{ .icon }}"></i></a>
+                {{ end }}
+            </div>
+        </div>
+        <nav id="navbar" class="nav-menu navbar">
+            <ul>
+                {{ range .Site.Menus.main }}
+                <li><a href="#{{ .Identifier }}" class="nav-link scrollto"><i class="{{ .Pre }}"></i> <span>{{ .Name }}</span></a></li>
+                {{ end }}
+            </ul>
+            <br><br><br>
+        </nav>
+    </div>
+</header>
