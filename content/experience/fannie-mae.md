@@ -1,7 +1,7 @@
 ---
-Title: "Lead Software Engineer"
-Dates: "2016 - Current"
-Company: "Fannie Mae"
+title: "Lead Software Engineer"
+dates: "2016 - Current"
+company: "Fannie Mae"
 weight: 1
 ---
 * In-house AI gateway: developed an in-house AI gateway to have observability and control over AI requests.

@@ -1,9 +1,9 @@
 ---
-Title: "Computer Systems"
-Link: "https://www.tjhsst.edu/"
-Year: "2000"
-Img: "tjhsst.png"
-Institution: "Thomas Jefferson High School for Science and Technology"
+title: "Computer Systems"
+link: "https://www.tjhsst.edu/"
+year: "2000"
+img: "assets/img/tjhsst.png"
+institution: "Thomas Jefferson High School for Science and Technology"
 weight: 1
 ---
 - Magnet program with a focus on computer science.

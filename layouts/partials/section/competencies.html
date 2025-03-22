@@ -3,12 +3,12 @@
         <div class="section-title">
             <h2>Specialties</h2>
         </div>
-        <div class="row">
+        <div class="row" data-aos="fade-left">
             {{ range where .Site.RegularPages "Section" "competencies" }}
-            <div class="col-lg-4 col-md-6 competencies" data-aos="fade-up" data-aos-delay="{{ mul (index . 0) 100 }}">
-                <div class="icon"><i class="{{ .Params.icon }}"></i></div>
-                <h4 class="title">{{ .Title }}</h4>
-                <p class="description">{{ .Params.description }}</p>
+            <div class="col-lg-6 col-md-6 competencies">
+                <div class="icon"><i style="font-size:3em" class="bx {{ .Params.icon }}"></i></div>
+                <h4 class="title">{{ .Params.description }}</h4>
+                <h6 class="description">{{ .Content }}</h6>
             </div>
             {{ end }}
         </div>
