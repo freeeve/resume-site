@@ -4,5 +4,5 @@ dates: "2021-2022"
 tech: ["python", "sagemaker"]
 weight: 3
 ---
-* Machine learning model to detect chicken eggs in images in my chicken coop.
-* Gained huge respect for image labelers, that is some painstaking work.
+* Machine learning model to detect chicken eggs in images in my chicken coop
+* Gained huge respect for image labelers, that is some painstaking work

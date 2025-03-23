@@ -5,4 +5,4 @@ dates: "2014-2019"
 tech: ["golang"]
 weight: 7
 ---
-* Chess engine interface for golang.
+* Chess engine interface for golang
