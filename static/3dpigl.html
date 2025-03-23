@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Monte Carlo Pi (3-D)</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+        body {
+            color: #ffffff;
+            background-color: #000000;
+            margin: 0px;
+            overflow: hidden;
+        }
+        #info {
+            position: absolute;
+            top: 0px;
+            width: 100%;
+            padding: 5px;
+            font-family: Monospace;
+            font-size: 15px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="info">3-D Monte Carlo Pi Calculation in WebGL by Eve <br/>
+    pi: <span id="pi"></span>, spherePoints: <span id="sphere"></span>, cubePoints: <span id="cube"></span><br/>
+    pi = 6 * spherePoints / cubePoints
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+<script>
+    // Constants
+    const RADIUS = 100;
+    const MAX_PARTICLES = 10000000;
+    const COUNT_PER_LOOP = 100;
+    const THETA_INCREMENT = 0.02;
+    const CAMERA_MULTIPLIER = 4.25;
+
+    // Scene variables
+    let renderer, scene, camera;
+    let container;
+    let raycaster;
+    let mouse;
+    let sphereCount = 0;
+    let cubeCount = 0;
+    let totalCount = 0;
+
+    // Geometries and materials
+    const sphereGeometry = new THREE.BufferGeometry();
+    const spherePositions = new Float32Array(MAX_PARTICLES * 3);
+    const cubeGeometry = new THREE.BufferGeometry();
+    const cubePositions = new Float32Array(MAX_PARTICLES / 2 * 3);
+
+    const purple = new THREE.Color(0xff00ff);
+    const green = new THREE.Color(0x00ff00);
+    const cubeMaterial = new THREE.PointsMaterial({ color: green, transparent: true, opacity: 0.3 });
+    const sphereMaterial = new THREE.PointsMaterial({ color: purple, transparent: true, opacity: 0.5 });
+
+    // Wait for DOM to load
+    document.addEventListener('DOMContentLoaded', () => {
+        init();
+        animate();
+    });
+
+    function addNewPoint() {
+        const x = (Math.random() * 2 - 1) * RADIUS;
+        const y = (Math.random() * 2 - 1) * RADIUS;
+        const z = (Math.random() * 2 - 1) * RADIUS;
+
+        if (Math.sqrt(x * x + y * y + z * z) <= RADIUS) {
+            const i3 = sphereCount * 3;
+            spherePositions[i3 + 0] = x;
+            spherePositions[i3 + 1] = y;
+            spherePositions[i3 + 2] = z;
+            sphereCount++;
+        } else {
+            const i3 = cubeCount * 3;
+            cubePositions[i3 + 0] = x;
+            cubePositions[i3 + 1] = y;
+            cubePositions[i3 + 2] = z;
+            cubeCount++;
+        }
+
+        sphereGeometry.setDrawRange(0, sphereCount);
+        cubeGeometry.setDrawRange(0, cubeCount);
+
+        totalCount++;
+    }
+
+    function init() {
+        container = document.getElementById('container');
+
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.z = RADIUS * 2.5;
+
+        for (let i = 0; i < COUNT_PER_LOOP; i++) {
+            addNewPoint();
+        }
+
+        sphereGeometry.setAttribute('position', new THREE.BufferAttribute(spherePositions, 3));
+        cubeGeometry.setAttribute('position', new THREE.BufferAttribute(cubePositions, 3));
+
+        const spherePoints = new THREE.Points(sphereGeometry, sphereMaterial);
+        const cubePoints = new THREE.Points(cubeGeometry, cubeMaterial);
+        scene.add(spherePoints);
+        scene.add(cubePoints);
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+
+        raycaster = new THREE.Raycaster();
+        mouse = new THREE.Vector2();
+
+        window.addEventListener('resize', onWindowResize, false);
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    let theta = 0;
+
+    function animate() {
+        if (sphereCount < MAX_PARTICLES) {
+            requestAnimationFrame(animate);
+        }
+        render();
+    }
+
+    function render() {
+        theta += THETA_INCREMENT;
+        const radius = RADIUS * CAMERA_MULTIPLIER;
+        camera.position.x = radius * Math.sin(THREE.MathUtils.degToRad(theta));
+        camera.position.y = radius * Math.sin(THREE.MathUtils.degToRad(theta));
+        camera.position.z = radius * Math.cos(THREE.MathUtils.degToRad(theta));
+        camera.lookAt(scene.position);
+        camera.updateMatrixWorld();
+
+        for (let i = 0; i < COUNT_PER_LOOP; i++) {
+            addNewPoint();
+        }
+
+        sphereGeometry.attributes.position.needsUpdate = true;
+        cubeGeometry.attributes.position.needsUpdate = true;
+
+        updatePi(sphereCount, totalCount);
+
+        renderer.render(scene, camera);
+    }
+
+    function updatePi(sphere, cube) {
+        document.getElementById('sphere').textContent = sphere;
+        document.getElementById('cube').textContent = cube;
+        document.getElementById('pi').textContent = (6 * sphere / cube).toFixed(10);
+    }
+</script>
+</body>
+</html>

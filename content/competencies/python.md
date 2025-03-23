@@ -7,4 +7,4 @@ weight: 3
 
 Python is a relative newcomer to my repertoire, but I have enjoyed
 using it for flask/fastapi apis, as well as some data science-related
-things that don't have as much support in other high-level languages.
+things that don't have as much support in other languages.

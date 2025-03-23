@@ -17,7 +17,7 @@ twitter:
   image: "/assets/img/eve-profile.jpeg"
 ---
 I am a lead software engineer with a passion for problem 
-solving, prototyping, security, and cloud computing. 
+solving, prototyping, security, and cost-sensitive cloud computing. 
 Bring me on to lead your next endeavor.
 
 Top 1% answerer in Go, Neo4j, and MongoDB on [Stack Overflow](https://stackoverflow.com/users/683201/eve-freeman).

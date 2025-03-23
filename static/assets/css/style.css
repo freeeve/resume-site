@@ -759,6 +759,10 @@ section {
     font-size: 14px;
 }
 
+span.tech {
+    padding: 0 0 0 10px;
+    font-size: .7em;
+}
 
 /*--------------------------------------------------------------
 # Contact

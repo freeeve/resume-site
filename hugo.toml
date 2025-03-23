@@ -49,14 +49,14 @@ name = "Work Highlights"
 pre = "bx bx-briefcase"
 weight = 3
 [[menu.main]]
-identifier = "projects"
-name = "Projects"
-pre = "bx bx-book-content"
-weight = 4
-[[menu.main]]
 identifier = "education"
 name = "Education"
 pre = "bx bx-book"
+weight = 4
+[[menu.main]]
+identifier = "projects"
+name = "Projects"
+pre = "bx bx-book-content"
 weight = 5
 [[menu.main]]
 identifier = "certifications"

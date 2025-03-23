@@ -8,7 +8,7 @@
             {{ if eq .Page.Section "projects"}}
             <div class="col-lg-6">
                 <div class="resume-item">
-                    <h4>{{ .Title }}</h4>
+                    <h4>{{ .Title }} {{ range .Params.tech }}<span class="tech">{{ . }}.</span>{{ end }}</h4>
                     {{ if .Params.project_url }}<h4><a href="https://{{ .Params.project_url }}">{{ .Params.project_url }}</a></h4>{{ end }}
                     <h5>{{ .Params.dates }}</h5>
                     {{ .Content }}
