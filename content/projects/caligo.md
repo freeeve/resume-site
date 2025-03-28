@@ -1,7 +1,7 @@
 ---
 title: "Caligo Chat"
 dates: "2014-2015"
-tech: ["golang", "android", "ios", "nacl"]
+tech: ["golang", "android", "ios", "nacl", "redis"]
 weight: 4
 ---
 * Anonymous chat application for iOS and Android.

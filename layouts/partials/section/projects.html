@@ -1,7 +1,7 @@
 <section id="projects" class="resume">
     <div class="container">
         <div class="section-title">
-            <h2>Projects</h2>
+            <h2>Personal Projects</h2>
         </div>
         <div class="row" data-aos="fade-left">
             {{ range .Site.RegularPages }}
@@ -9,7 +9,7 @@
             <div class="col-lg-6">
                 <div class="resume-item">
                     <h4>{{ .Title }} {{ range .Params.tech }}<span class="tech">{{ . }}.</span>{{ end }}</h4>
-                    {{ if .Params.project_url }}<h4><a href="https://{{ .Params.project_url }}">{{ .Params.project_url }}</a></h4>{{ end }}
+                    {{ if .Params.project_url }}<h4><a href="{{ .Params.project_url }}">{{ .Params.project_url }}</a></h4>{{ end }}
                     <h5>{{ .Params.dates }}</h5>
                     {{ .Content }}
                 </div>
