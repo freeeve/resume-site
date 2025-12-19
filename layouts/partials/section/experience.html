@@ -1,6 +1,6 @@
-<section id="experience" class="resume">
+<section id="experience" class="resume" aria-labelledby="experience-heading">
     <div class="container">
-        <div class="section-title"><h2>Work Highlights</h2></div>
+        <div class="section-title"><h2 id="experience-heading">Work Highlights</h2></div>
         <div class="row" data-aos="fade-left">
             {{ range .Site.RegularPages }}
             {{ if eq .Page.Section "experience"}}
@@ -9,6 +9,13 @@
                     <h4>{{ .Title }}</h4>
                     <h6>{{ .Params.company }}</h6>
                     <h5>{{ .Params.dates }}</h5>
+                    {{ if .Params.tech }}
+                    <div class="tech-tags">
+                        {{ range .Params.tech }}
+                        <span>{{ . }}</span>
+                        {{ end }}
+                    </div>
+                    {{ end }}
                     {{ .Content }}
                 </div>
             </div>

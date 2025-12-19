@@ -10,6 +10,7 @@
     src: url('/assets/fonts/Hermit-Regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap; /* Show fallback font immediately, swap when loaded */
 }
 
 @font-face {
@@ -17,6 +18,7 @@
     src: url('/assets/fonts/Hermit-Bold.otf') format('opentype');
     font-weight: bold;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -24,6 +26,7 @@
     src: url('/assets/fonts/Hermit-RegularItalic.otf') format('opentype');
     font-weight: normal;
     font-style: italic;
+    font-display: swap;
 }
 
 @font-face {
@@ -31,23 +34,105 @@
     src: url('/assets/fonts/Hermit-BoldItalic.otf') format('opentype');
     font-weight: bold;
     font-style: italic;
+    font-display: swap;
 }
+/*--------------------------------------------------------------
+# CSS Variables for Theme
+--------------------------------------------------------------*/
+:root {
+    /* Light theme colors */
+    --bg-primary: #fff;
+    --bg-secondary: #f5f8fd;
+    --bg-tertiary: #e4edf9;
+    --text-primary: #272829;
+    --text-secondary: #6f7180;
+    --text-light: #a8a9b4;
+    --accent-primary: #149ddd;
+    --accent-hover: #37b3ed;
+    --header-bg: #040b14;
+    --header-text: #fff;
+    --border-color: #e9ecef;
+    --shadow: rgba(0, 0, 0, 0.08);
+    --shadow-hover: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="dark"] {
+    /* Dark theme colors */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #252525;
+    --bg-tertiary: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-light: #808080;
+    --accent-primary: #37b3ed;
+    --accent-hover: #149ddd;
+    --header-bg: #040b14; /* Keep header always dark */
+    --header-text: #fff; /* Keep header text always light */
+    --border-color: #333;
+    --shadow: rgba(0, 0, 0, 0.3);
+    --shadow-hover: rgba(0, 0, 0, 0.5);
+}
+
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
 body {
     font-family: "Hermit", sans-serif;
-    color: #272829;
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/*--------------------------------------------------------------
+# Skip to Content Link
+--------------------------------------------------------------*/
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #149ddd;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 10000;
+    font-weight: 600;
+    border-radius: 0 0 4px 0;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: 3px solid #fff;
+    outline-offset: 2px;
 }
 
 a {
-    color: #149ddd;
+    color: var(--accent-primary);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #37b3ed;
+    color: var(--accent-hover);
     text-decoration: none;
+}
+
+a:focus-visible {
+    outline: 2px solid #149ddd;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* Enhanced link hover effects */
+.resume-item a,
+.about .content a {
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: inline-block;
+}
+
+.resume-item a:hover,
+.about .content a:hover {
+    color: var(--accent-hover);
+    transform: translateX(2px);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -64,7 +149,7 @@ h1, h2, h3, h4, h5, h6 {
     right: 15px;
     bottom: 15px;
     z-index: 996;
-    background: #149ddd;
+    background: var(--accent-primary);
     width: 40px;
     height: 40px;
     border-radius: 50px;
@@ -78,13 +163,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .back-to-top:hover {
-    background: #2eafec;
+    background: var(--accent-hover);
     color: #fff;
 }
 
 .back-to-top.active {
     visibility: visible;
     opacity: 1;
+}
+
+.back-to-top:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
 }
 
 /*--------------------------------------------------------------
@@ -100,7 +190,7 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 9997;
     transition: all 0.5s;
     padding: 0 15px;
-    background: #040b14;
+    background: var(--header-bg);
     overflow-y: auto;
 }
 
@@ -122,15 +212,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header .profile h1 a, #header .profile h1 a:hover {
-    color: #fff;
+    color: #fff; /* Always white for dark header */
     text-decoration: none;
 }
 
 #header .profile .social-links a {
     font-size: 18px;
     display: inline-block;
-    background: #212431;
-    color: #fff;
+    background: #212431; /* Always dark gray for dark header */
+    color: #fff; /* Always white for dark header */
     line-height: 1;
     padding: 8px 0;
     margin-right: 4px;
@@ -142,7 +232,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header .profile .social-links a:hover {
-    background: #149ddd;
+    background: #149ddd; /* Always blue accent for dark header */
     color: #fff;
     text-decoration: none;
 }
@@ -182,26 +272,33 @@ h1, h2, h3, h4, h5, h6 {
 .nav-menu a, .nav-menu a:focus {
     display: flex;
     align-items: center;
-    color: #a8a9b4;
+    color: #a8a9b4; /* Always light gray for dark header */
     padding: 12px 15px;
     margin-bottom: 8px;
     transition: 0.3s;
     font-size: 15px;
+    outline: none;
+}
+
+.nav-menu a:focus-visible {
+    outline: 2px solid #149ddd;
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 .nav-menu a i, .nav-menu a:focus i {
     font-size: 24px;
     padding-right: 8px;
-    color: #6f7180;
+    color: #6f7180; /* Always medium gray for dark header */
 }
 
 .nav-menu a:hover, .nav-menu .active, .nav-menu .active:focus, .nav-menu li:hover > a {
     text-decoration: none;
-    color: #fff;
+    color: #fff; /* Always white for dark header */
 }
 
 .nav-menu a:hover i, .nav-menu .active i, .nav-menu .active:focus i, .nav-menu li:hover > a i {
-    color: #149ddd;
+    color: #149ddd; /* Always blue accent for dark header */
 }
 
 /* Mobile Navigation */
@@ -226,6 +323,11 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
 }
 
+.mobile-nav-toggle:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 2px;
+}
+
 .mobile-nav-active {
     overflow: hidden;
 }
@@ -240,8 +342,38 @@ h1, h2, h3, h4, h5, h6 {
 #hero {
     width: 100%;
     height: 100vh;
-    background: url("../img/metallurgy1_thumbnail_980x551.jpg") top center;
+    /* Use WebP with JPG fallback for better performance */
+    background-image: url("../img/metallurgy1_thumbnail_980x551.webp");
+    background-position: top center;
     background-size: cover;
+    background-repeat: no-repeat;
+    /* Explicit flexbox to avoid dependency on Bootstrap */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fallback for browsers that don't support WebP */
+@supports not (background-image: url("../img/metallurgy1_thumbnail_980x551.webp")) {
+    #hero {
+        background-image: url("../img/metallurgy1_thumbnail_980x551.jpg");
+    }
+}
+
+/* Optimize for mobile - use solid color for faster LCP */
+@media (max-width: 768px) {
+    #hero {
+        /* On mobile, use a gradient instead of large image for faster LCP */
+        background-image: linear-gradient(135deg, #040b14 0%, #1a1a2e 100%);
+        /* Remove background image completely on mobile for best performance */
+        background-size: auto;
+    }
+    
+    /* Remove preload hint for hero image on mobile */
+    #hero::before {
+        display: none;
+    }
 }
 
 #hero:before {
@@ -259,6 +391,13 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     z-index: 2;
     min-width: 300px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#hero .hero-text {
+    text-align: left;
+    display: inline-block;
 }
 
 #hero h1 {
@@ -267,20 +406,80 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     line-height: 56px;
     color: #fff;
+    text-align: left;
 }
 
 #hero p {
     color: #fff;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     font-size: 26px;
     font-family: "Hermit", sans-serif;
+    text-align: left;
+    line-height: 1.4;
+}
+
+/* Hide hero-break on desktop and remove spacing */
+#hero .hero-break {
+    display: none;
+    line-height: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#hero p .typed-wrapper {
+    display: inline-block;
+    width: 450px;
+    text-align: left;
+    vertical-align: baseline;
+    margin-left: 0;
+}
+
+#hero p span.typed {
+    display: inline;
 }
 
 #hero p span {
     color: #fff;
     padding-bottom: 4px;
     letter-spacing: 1px;
-    border-bottom: 3px solid #149ddd;
+}
+
+#hero .hero-cta {
+    margin-top: 20px;
+}
+
+#hero .btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background: #149ddd;
+    border: 2px solid #149ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: "Hermit", sans-serif;
+}
+
+#hero .btn-hero:hover {
+    background: #37b3ed;
+    border-color: #37b3ed;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(20, 157, 221, 0.4);
+}
+
+#hero .btn-hero:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+}
+
+#hero .btn-hero i {
+    font-size: 20px;
 }
 
 @media (min-width: 1024px) {
@@ -299,22 +498,136 @@ h1, h2, h3, h4, h5, h6 {
         line-height: 24px;
         margin-bottom: 30px;
     }
+    #hero p {
+        font-size: 20px;
+        text-align: left;
+    }
+    #hero p .typed-wrapper {
+        width: 300px;
+    }
+    #hero .hero-break {
+        display: block;
+        line-height: 1.2;
+        height: auto;
+    }
+    #hero .btn-hero {
+        padding: 10px 24px;
+        font-size: 14px;
+    }
+    #hero .btn-hero i {
+        font-size: 18px;
+    }
+}
+
+@media (min-width: 769px) {
+    #hero .hero-break {
+        display: none;
+    }
+}
+
+/*--------------------------------------------------------------
+# 404 Error Page
+--------------------------------------------------------------*/
+#error {
+    padding: 80px 0;
+}
+
+#error h3 {
+    color: #173b6c;
+    margin-bottom: 20px;
+}
+
+#error ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#error ul li {
+    margin-bottom: 12px;
+    padding-left: 25px;
+    position: relative;
+}
+
+#error ul li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: #149ddd;
+    font-weight: bold;
+}
+
+#error ul li a {
+    color: #149ddd;
+    font-weight: 500;
+}
+
+#error ul li a:hover {
+    color: #37b3ed;
 }
 
 /*--------------------------------------------------------------
 # Sections General
 --------------------------------------------------------------*/
 section {
-    padding: 40px 0;
+    padding: 60px 0;
     overflow: hidden;
 }
 
+@media (max-width: 768px) {
+    section {
+        padding: 40px 0;
+    }
+}
+
 .section-bg {
-    background: #f5f8fd;
+    background: var(--bg-secondary);
+    transition: background-color 0.3s ease;
+}
+
+/*--------------------------------------------------------------
+# Theme Toggle Button
+--------------------------------------------------------------*/
+.theme-toggle {
+    margin-top: 20px;
+}
+
+.theme-toggle-btn {
+    background: #212431; /* Always dark gray for dark header */
+    border: 2px solid #2c2f3f; /* Always dark border for dark header */
+    color: #fff; /* Always white for dark header */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    padding: 0;
+    outline: none;
+}
+
+.theme-toggle-btn:hover {
+    background: #149ddd; /* Always blue accent for dark header */
+    border-color: #149ddd;
+    color: #fff;
+    transform: scale(1.1);
+}
+
+.theme-toggle-btn:focus-visible {
+    outline: 2px solid #149ddd;
+    outline-offset: 2px;
 }
 
 .section-title {
-    padding-bottom: 30px;
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+}
+
+#stats .section-title {
+    padding-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .section-title h2 {
@@ -323,7 +636,12 @@ section {
     margin-bottom: 20px;
     padding-bottom: 20px;
     position: relative;
-    color: #173b6c;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .section-title h2 {
+    color: #e0e0e0; /* Lighter color for better visibility in dark mode */
 }
 
 .section-title h2::after {
@@ -332,9 +650,10 @@ section {
     display: block;
     width: 50px;
     height: 3px;
-    background: #149ddd;
+    background: var(--accent-primary);
     bottom: 0;
     left: 0;
+    transition: background-color 0.3s ease;
 }
 
 .section-title p {
@@ -347,7 +666,12 @@ section {
 .about .content h3 {
     font-weight: 700;
     font-size: 26px;
-    color: #173b6c;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .about .content h3 {
+    color: #e0e0e0; /* Lighter color for better visibility in dark mode */
 }
 
 .about .content ul {
@@ -368,8 +692,13 @@ section {
 .about .content ul i {
     font-size: 16px;
     margin-right: 5px;
-    color: #149ddd;
+    color: var(--accent-primary);
     line-height: 0;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+.about .content ul li:hover i {
+    transform: scale(1.2);
 }
 
 .about .content p:last-child {
@@ -386,31 +715,39 @@ section {
 .facts .count-box {
     padding: 30px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .facts .count-box i {
-    display: block;
     font-size: 44px;
-    color: #149ddd;
-    float: left;
-    line-height: 0;
+    color: var(--accent-primary);
+    flex-shrink: 0;
+    line-height: 1;
+    transition: color 0.3s ease;
 }
 
 .facts .count-box span {
-    font-size: 48px;
-    line-height: 40px;
+    font-size: 32px;
+    line-height: 1.2;
     display: block;
     font-weight: 700;
-    color: #050d18;
-    margin-left: 60px;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.facts .count-box > div {
+    flex: 1;
 }
 
 .facts .count-box p {
-    padding: 15px 0 0 0;
-    margin: 0 0 0 60px;
+    padding: 5px 0 0 0;
+    margin: 0;
     font-family: "Hermit", sans-serif;
     font-size: 14px;
-    color: #122f57;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
 }
 
 .facts .count-box a {
@@ -425,6 +762,66 @@ section {
 
 .facts .count-box a:hover {
     color: #1f5297;
+}
+
+.facts .count-box a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.facts .count-box a i {
+    font-size: 14px;
+}
+
+.github-contributions,
+.stackoverflow-widget {
+    background: var(--bg-primary);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 24px 0 var(--shadow);
+    transition: box-shadow 0.3s ease, background-color 0.3s ease;
+    height: 100%;
+}
+
+.github-contributions:hover,
+.stackoverflow-widget:hover {
+    box-shadow: 0 0 32px 0 var(--shadow-hover);
+}
+
+.github-contributions a {
+    display: block;
+    transition: transform 0.2s ease;
+}
+
+.github-contributions a:hover {
+    transform: scale(1.02);
+}
+
+.github-contributions a img {
+    display: block;
+    width: 100%;
+}
+
+/* Widget titles */
+.widget-title {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #173b6c;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .widget-title {
+    color: #e0e0e0; /* Lighter color for better visibility in dark mode */
+}
+
+.stackoverflow-widget img {
+    border-radius: 4px;
+    transition: transform 0.2s ease;
+}
+
+.stackoverflow-widget a:hover img {
+    transform: scale(1.02);
 }
 
 /*--------------------------------------------------------------
@@ -472,14 +869,30 @@ section {
     font-weight: 700;
     margin-top: 20px;
     margin-bottom: 20px;
-    color: #050d18;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .resume .resume-item {
     padding: 0 0 20px 20px;
     margin-top: -2px;
-    border-left: 2px solid #1f5297;
+    border-left: 2px solid var(--accent-primary);
     position: relative;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    margin-left: -10px;
+    padding-left: 30px;
+}
+
+.resume .resume-item:hover {
+    background-color: rgba(20, 157, 221, 0.05);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px var(--shadow-hover);
+    border-left-color: var(--accent-primary);
+}
+
+[data-theme="dark"] .resume .resume-item:hover {
+    background-color: rgba(55, 179, 237, 0.15);
 }
 
 .resume .resume-item h4 {
@@ -488,13 +901,15 @@ section {
     font-weight: 600;
     text-transform: uppercase;
     font-family: "Hermit", sans-serif;
-    color: #050d18;
+    color: var(--text-primary);
     margin-bottom: 10px;
+    transition: color 0.3s ease;
 }
 
 .resume .resume-item h5 {
     font-size: 16px;
-    background: #e4edf9;
+    background: var(--bg-tertiary);
+    transition: background-color 0.3s ease, color 0.3s ease;
     padding: 5px 15px;
     display: inline-block;
     font-weight: 600;
@@ -525,10 +940,71 @@ section {
     border: 2px solid #1f5297;
 }
 
+/* Certification images */
+.resume-item .cert-image {
+    width: 80px;
+    height: auto;
+    vertical-align: middle;
+    margin-right: 8px;
+    transition: transform 0.2s ease;
+}
+
+.resume-item .cert-image.small {
+    width: 60px;
+}
+
+/* Make Neo4j logo readable in dark mode - convert only black pixels to white */
+[data-theme="dark"] .resume-item .cert-image[alt*="Neo4j"],
+[data-theme="dark"] .resume-item .cert-image[src*="neo4j"],
+[data-theme="dark"] .resume-item picture img[src*="neo4j"],
+[data-theme="dark"] .resume-item .cert-link img[src*="neo4j-certified"] {
+    /* First make everything black, then invert to white - preserves transparency and colors */
+    /* The brightness(0) makes all colors black, then invert(1) makes them white */
+    filter: brightness(0) invert(1);
+}
+
+.resume-item .cert-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-left: -8px;
+}
+
+.resume-item .cert-link:hover {
+    color: var(--accent-primary);
+    /* Remove individual cert hover background */
+    transform: translateX(3px);
+}
+
+.resume-item .cert-link:hover .cert-image {
+    transform: scale(1.05);
+}
+
 .school-logo {
     display: block;
     margin: 20px auto;
     max-width: 200px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0.9;
+}
+
+/* Invert TJHSST logo in dark mode for readability */
+[data-theme="dark"] .school-logo[src*="tjhsst"],
+[data-theme="dark"] .school-logo[alt*="tjhsst"],
+[data-theme="dark"] .school-logo[alt*="Thomas Jefferson"],
+[data-theme="dark"] picture img[src*="tjhsst"],
+[data-theme="dark"] .col-lg-4 img[src*="tjhsst"] {
+    filter: brightness(0) invert(1);
+}
+
+.school-logo:hover {
+    transform: scale(1.05);
+    opacity: 1;
 }
 
 @media (min-width: 768px) {
@@ -709,6 +1185,14 @@ section {
 --------------------------------------------------------------*/
 .services .icon-box {
     margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.services .icon-box:hover {
+    transform: translateY(-3px);
+    background-color: #f8f9fa;
 }
 
 .services .icon {
@@ -764,6 +1248,31 @@ span.tech {
     font-size: .7em;
 }
 
+/* Experience tech tags */
+.resume-item .tech-tags {
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-size: 0.85em;
+    color: #6c757d;
+}
+
+.resume-item .tech-tags span {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 4px;
+    padding: 2px 8px;
+    background-color: #f5f8fd;
+    border-radius: 3px;
+    font-family: "Hermit", sans-serif;
+    transition: all 0.2s ease;
+}
+
+.resume-item .tech-tags span:hover {
+    background-color: #e4edf9;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(20, 157, 221, 0.2);
+}
+
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
@@ -773,9 +1282,16 @@ span.tech {
 
 .contact .info {
     padding: 30px;
-    background: #fff;
+    background: var(--bg-primary);
     width: 100%;
-    box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 0 24px 0 var(--shadow);
+    border-radius: 8px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+
+.contact .info:hover {
+    box-shadow: 0 0 32px 0 var(--shadow-hover);
+    transform: translateY(-2px);
 }
 
 .contact .info i {
@@ -797,14 +1313,16 @@ span.tech {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 5px;
-    color: #050d18;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
 }
 
 .contact .info p {
     padding: 0 0 10px 60px;
     margin-bottom: 20px;
     font-size: 14px;
-    color: #173b6c;
+    color: var(--text-secondary);
+    transition: color 0.3s ease;
 }
 
 .contact .info .email p {
@@ -1065,3 +1583,579 @@ span.tech {
 @-moz-keyframes resume-pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
 @-ms-keyframes resume-pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
 @keyframes resume-pulse {to {box-shadow: 0 0 0 45px rgba(232, 76, 61, 0);}}
+
+/*--------------------------------------------------------------
+# Print Styles
+--------------------------------------------------------------*/
+@media print {
+    /* Hide non-essential elements */
+    #header,
+    .mobile-nav-toggle,
+    .back-to-top,
+    .hero-cta,
+    .skip-to-content,
+    #hero,
+    .section-bg,
+    .social-links,
+    .btn-hero,
+    .btn,
+    nav,
+    footer {
+        display: none !important;
+    }
+
+    /* Adjust main content */
+    #main {
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+
+    body {
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #000;
+        background: #fff;
+    }
+
+    /* Force single column layout */
+    .container {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .row {
+        display: block !important;
+        margin: 0 !important;
+    }
+
+    .col-lg-6,
+    .col-lg-8,
+    .col-lg-4,
+    .col-md-6,
+    [class*="col-"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        float: none !important;
+        margin: 0 0 15px 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Page setup */
+    @page {
+        size: letter;
+        margin: 0.75in;
+    }
+
+    /* Section styling */
+    section {
+        page-break-inside: avoid;
+        padding: 15px 0 !important;
+        margin-bottom: 10px;
+        display: block !important;
+        width: 100% !important;
+        orphans: 3;
+        widows: 3;
+    }
+
+    /* Force page breaks before major sections */
+    #experience,
+    #education,
+    #projects,
+    #certifications,
+    #stats,
+    #competencies {
+        page-break-before: always;
+    }
+
+    /* Stats section print styles */
+    #stats .count-box {
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+    }
+
+    #stats .count-box i {
+        display: none;
+    }
+
+    #stats .count-box span {
+        font-size: 16pt;
+        margin-left: 0;
+    }
+
+    #stats .count-box p {
+        font-size: 9pt;
+        margin-left: 0;
+    }
+
+    #stats .count-box a {
+        display: none;
+    }
+
+    #stats .github-contributions {
+        display: none;
+    }
+
+    /* Keep section titles with their content */
+    .section-title {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+
+    .section-title h2 {
+        page-break-after: avoid;
+    }
+
+    /* Keep first resume item with section title */
+    .section-title + .row .resume-item:first-child,
+    .section-title + * .resume-item:first-child {
+        page-break-before: avoid;
+    }
+
+    /* Ensure all sections are visible */
+    #about,
+    #experience,
+    #education,
+    #projects,
+    #certifications,
+    #stats,
+    #competencies,
+    #buildingblocks,
+    #contact,
+    section[id="buildingblocks"],
+    section[id="contact"],
+    section[class*="buildingblocks"],
+    section[class*="contact"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .section-title {
+        padding-bottom: 8px !important;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+
+    .section-title h2 {
+        font-size: 14pt;
+        color: #000;
+        border-bottom: 2px solid #000;
+        padding-bottom: 3px;
+        margin-bottom: 8px;
+        page-break-after: avoid;
+    }
+
+    .section-title h2::after {
+        display: none;
+    }
+
+    /* Resume items */
+    .resume-item {
+        page-break-inside: avoid;
+        border-left: 2px solid #000;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        background: transparent !important;
+        box-shadow: none !important;
+        transform: none !important;
+        orphans: 2;
+        widows: 2;
+    }
+
+    .resume-item h4 {
+        font-size: 11pt;
+        color: #000;
+        margin-bottom: 3px;
+        page-break-after: avoid;
+    }
+
+    .resume-item h5 {
+        font-size: 9pt;
+        background: transparent;
+        padding: 0;
+        margin-bottom: 3px;
+        color: #333;
+        page-break-after: avoid;
+    }
+
+    .resume-item h6 {
+        font-size: 9pt;
+        color: #555;
+        margin-bottom: 3px;
+        page-break-after: avoid;
+    }
+
+    .resume-item p,
+    .resume-item ul,
+    .resume-item li {
+        font-size: 9pt;
+        margin-bottom: 4px;
+        line-height: 1.3;
+    }
+
+    /* Tech tags */
+    .tech-tags {
+        margin: 3px 0;
+    }
+
+    .tech-tags span {
+        background: #f0f0f0 !important;
+        border: 1px solid #ccc;
+        padding: 1px 4px;
+        margin-right: 4px;
+        font-size: 8pt;
+    }
+
+    /* Certification images */
+    .cert-image {
+        width: 60px !important;
+        height: auto;
+    }
+
+    .cert-image.small {
+        width: 45px !important;
+    }
+
+    .cert-link {
+        page-break-inside: avoid;
+        margin-bottom: 5px;
+    }
+
+    /* About section */
+    .about .content {
+        page-break-inside: avoid;
+    }
+
+    .about .content img,
+    .about img,
+    .about .col-lg-4 img {
+        max-width: 50px;
+        width: 50px;
+        height: auto;
+        float: right;
+        margin: 0 0 10px 15px;
+    }
+
+    /* Links */
+    a {
+        color: #000;
+        text-decoration: underline;
+    }
+
+    a[href^="http"]:after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        color: #666;
+    }
+
+    a[href^="#"]:after,
+    a[href^="/"]:after {
+        content: "";
+    }
+
+    /* Images */
+    img {
+        max-width: 100%;
+        height: auto;
+        page-break-inside: avoid;
+    }
+
+    /* Typography */
+    h1 {
+        font-size: 16pt;
+        page-break-after: avoid;
+    }
+
+    h2, h3, h4, h5, h6 {
+        color: #000;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 12pt;
+    }
+
+    p {
+        margin-bottom: 6px;
+        font-size: 9pt;
+        line-height: 1.3;
+    }
+
+    ul, ol {
+        margin-bottom: 6px;
+        font-size: 9pt;
+        padding-left: 15px;
+    }
+
+    li {
+        margin-bottom: 3px;
+        line-height: 1.3;
+    }
+
+    /* Remove animations and transitions */
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    /* Competencies/Services section - this is the Building Blocks section */
+    #competencies,
+    section#competencies,
+    section[id="competencies"],
+    .services[id="competencies"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    #competencies .container,
+    #competencies .row,
+    #competencies .section-title {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .services,
+    .competencies {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .services .icon-box,
+    .competencies {
+        page-break-inside: avoid;
+        margin-bottom: 15px;
+        display: block !important;
+        width: 100% !important;
+        visibility: visible !important;
+    }
+
+    .services .icon {
+        display: none;
+    }
+
+    .services .title,
+    .services .description {
+        margin-left: 0;
+        display: block;
+        visibility: visible !important;
+    }
+
+    /* Building blocks section - target by section ID competencies */
+    #competencies,
+    section[id="competencies"],
+    section.competencies {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Building blocks content */
+    .buildingblocks,
+    #buildingblocks,
+    section[id="competencies"] .buildingblocks,
+    .services .buildingblocks,
+    #competencies .buildingblocks,
+    .col-lg-12.buildingblocks,
+    div.buildingblocks {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        page-break-inside: avoid;
+        clear: both;
+    }
+
+    #competencies .row,
+    section[id="competencies"] .row {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .buildingblocks h5 {
+        font-size: 10pt;
+        font-weight: bold;
+        margin-bottom: 6px;
+        color: #000;
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    .buildingblocks > span,
+    .buildingblocks span,
+    div.buildingblocks > span,
+    div.buildingblocks span {
+        display: inline-block !important;
+        margin-right: 15px;
+        margin-bottom: 10px;
+        vertical-align: top;
+        page-break-inside: avoid;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .buildingblocks img,
+    div.buildingblocks img {
+        display: block !important;
+        margin: 0 auto 5px;
+        max-width: 50px;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .buildingblocks span span,
+    div.buildingblocks span span {
+        display: block !important;
+        text-align: center;
+        font-size: 7pt;
+        width: 50px;
+        margin: 0;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Force all elements in competencies section to be visible */
+    #competencies *,
+    section[id="competencies"] * {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    /* Contact section */
+    .contact,
+    #contact,
+    section[id="contact"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .contact .info,
+    .contact .row,
+    .contact .col-lg-6 {
+        box-shadow: none;
+        border: 1px solid #ccc;
+        page-break-inside: avoid;
+        display: block !important;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .contact .info .address,
+    .contact .info .email {
+        display: block !important;
+        margin-bottom: 15px;
+        page-break-inside: avoid;
+        visibility: visible !important;
+    }
+
+    .contact .info i {
+        display: inline-block !important;
+        margin-right: 10px;
+        visibility: visible !important;
+    }
+
+    .contact .info h4 {
+        display: inline-block;
+        margin: 0 0 5px 0;
+        visibility: visible !important;
+    }
+
+    .contact .info p {
+        margin: 0 0 10px 0;
+        visibility: visible !important;
+    }
+
+    .contact .info p a {
+        visibility: visible !important;
+    }
+
+    /* Education logos */
+    .school-logo {
+        max-width: 120px;
+        float: right;
+        margin: 0 0 10px 15px;
+    }
+
+    /* Remove backgrounds and shadows */
+    * {
+        background: transparent !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    /* Ensure good contrast */
+    .text-light,
+    .text-white {
+        color: #000 !important;
+    }
+
+    /* Page break control */
+    .resume-item:last-child,
+    section:last-child {
+        page-break-after: auto;
+    }
+
+    /* Prevent awkward breaks */
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Keep section title with first content item */
+    .section-title + .row,
+    .section-title + * {
+        page-break-before: avoid;
+    }
+
+    /* Allow breaks between resume items if needed, but keep headers together */
+    .resume-item + .resume-item {
+        page-break-before: auto;
+    }
+
+    /* Keep related content together within resume items */
+    .resume-item h4 + h5,
+    .resume-item h5 + h6,
+    .resume-item h6 + p,
+    .resume-item h6 + ul,
+    .resume-item h4 + .tech-tags,
+    .resume-item h5 + .tech-tags {
+        page-break-before: avoid;
+    }
+
+    /* Keep tech tags with their resume item */
+    .tech-tags {
+        page-break-before: avoid;
+        page-break-after: avoid;
+    }
+
+    /* Keep certification links together */
+    .cert-link + .cert-link {
+        page-break-before: avoid;
+    }
+
+    /* Allow breaks in long lists */
+    ul li, ol li {
+        page-break-inside: avoid;
+    }
+
+    /* Prevent breaking certification links */
+    .cert-link {
+        page-break-inside: avoid;
+    }
+
+    /* Better spacing for compact layout */
+    .about .content h3 {
+        font-size: 12pt;
+        margin-bottom: 8px;
+    }
+
+    .about .content p {
+        margin-bottom: 6px;
+    }
+}

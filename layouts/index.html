@@ -2,8 +2,12 @@
 <html lang="en">
 {{ partial "head.html" . }}
 <body data-aos-easing="ease-in-out" data-aos-duration="1000" data-aos-delay="0">
+<!-- Skip to content link -->
+<a href="#main" class="skip-to-content">Skip to main content</a>
 <!-- Mobile nav toggle -->
-<i class="bi bi-list mobile-nav-toggle d-xl-none"></i>
+<button type="button" class="mobile-nav-toggle d-xl-none" aria-label="Toggle mobile navigation" aria-expanded="false" aria-controls="header">
+    <i class="bi bi-list" aria-hidden="true"></i>
+</button>
 
 <!-- Header -->
 {{ partial "header.html" . }}
@@ -18,14 +22,15 @@
     {{ partial "section/education.html" . }}
     {{ partial "section/projects.html" . }}
     {{ partial "section/certifications.html" . }}
+    {{ partial "section/stats.html" . }}
     {{ partial "section/competencies.html" . }}
     {{ partial "section/buildingblocks.html" . }}
     {{ partial "section/contact.html" . }}
 </main>
 
 <!-- Back to Top -->
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center" aria-label="Back to top"><i
+        class="bi bi-arrow-up-short" aria-hidden="true"></i></a>
 
 <!-- Vendor JS -->
 {{ partial "scripts.html" . }}

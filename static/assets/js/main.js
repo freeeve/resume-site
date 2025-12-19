@@ -91,9 +91,10 @@
      * Mobile nav toggle
      */
     on('click', '.mobile-nav-toggle', function(e) {
-        select('body').classList.toggle('mobile-nav-active')
+        const isActive = select('body').classList.toggle('mobile-nav-active')
         this.classList.toggle('bi-list')
         this.classList.toggle('bi-x')
+        this.setAttribute('aria-expanded', isActive)
     })
 
     /**
@@ -144,24 +145,27 @@
     /**
      * Skills animation
      */
-    let skilsContent = select('.skills-content');
-    if (skilsContent) {
-        new Waypoint({
-            element: skilsContent,
-            offset: '80%',
-            handler: function(direction) {
-                let progress = select('.progress .progress-bar', true);
-                progress.forEach((el) => {
-                    el.style.width = el.getAttribute('aria-valuenow') + '%'
-                });
-            }
-        })
+    if (typeof Waypoint !== 'undefined') {
+        let skilsContent = select('.skills-content');
+        if (skilsContent) {
+            new Waypoint({
+                element: skilsContent,
+                offset: '80%',
+                handler: function(direction) {
+                    let progress = select('.progress .progress-bar', true);
+                    progress.forEach((el) => {
+                        el.style.width = el.getAttribute('aria-valuenow') + '%'
+                    });
+                }
+            })
+        }
     }
 
     /**
      * Porfolio isotope and filter
      */
     window.addEventListener('load', () => {
+        if (typeof Isotope === 'undefined') return;
         let portfolioContainer = select('.portfolio-container');
         if (portfolioContainer) {
             let portfolioIsotope = new Isotope(portfolioContainer, {
@@ -177,12 +181,14 @@
                 });
                 this.classList.add('filter-active');
 
-                portfolioIsotope.arrange({
-                    filter: this.getAttribute('data-filter')
-                });
-                portfolioIsotope.on('arrangeComplete', function() {
-                    AOS.refresh()
-                });
+                    portfolioIsotope.arrange({
+                        filter: this.getAttribute('data-filter')
+                    });
+                    portfolioIsotope.on('arrangeComplete', function() {
+                        if (typeof AOS !== 'undefined') {
+                            AOS.refresh()
+                        }
+                    });
             }, true);
         }
 
@@ -191,66 +197,164 @@
     /**
      * Initiate portfolio lightbox
      */
-    const portfolioLightbox = GLightbox({
-        selector: '.portfolio-lightbox'
-    });
+    if (typeof GLightbox !== 'undefined') {
+        const portfolioLightbox = GLightbox({
+            selector: '.portfolio-lightbox'
+        });
+    }
 
     /**
      * Portfolio details slider
      */
-    new Swiper('.portfolio-details-slider', {
-        speed: 400,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true
-        }
-    });
-
-    /**
-     * Testimonials slider
-     */
-    new Swiper('.testimonials-slider', {
-        speed: 600,
-        loop: true,
-        autoplay: {
-            delay: 5000,
-            disableOnInteraction: false
-        },
-        slidesPerView: 'auto',
-        pagination: {
-            el: '.swiper-pagination',
-            type: 'bullets',
-            clickable: true
-        },
-        breakpoints: {
-            320: {
-                slidesPerView: 1,
-                spaceBetween: 20
+    if (typeof Swiper !== 'undefined') {
+        new Swiper('.portfolio-details-slider', {
+            speed: 400,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false
             },
-
-            1200: {
-                slidesPerView: 3,
-                spaceBetween: 20
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'bullets',
+                clickable: true
             }
-        }
-    });
+        });
+
+        /**
+         * Testimonials slider
+         */
+        new Swiper('.testimonials-slider', {
+            speed: 600,
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false
+            },
+            slidesPerView: 'auto',
+            pagination: {
+                el: '.swiper-pagination',
+                type: 'bullets',
+                clickable: true
+            },
+            breakpoints: {
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 20
+                },
+
+                1200: {
+                    slidesPerView: 3,
+                    spaceBetween: 20
+                }
+            }
+        });
+    }
 
     /**
      * Animation on scroll
      */
     window.addEventListener('load', () => {
-        AOS.init({
-            duration: 1000,
-            easing: 'ease-in-out',
-            once: true,
-            mirror: false
-        })
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+                duration: 1000,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false
+            })
+        }
     });
+
+    /**
+     * Dark Mode Toggle with Auto (OS preference) support
+     */
+    const initThemeToggle = () => {
+        const themeToggle = select('#theme-toggle')
+        const themeIcon = select('#theme-icon')
+        const html = document.documentElement
+        
+        // Get OS preference
+        const getOSPreference = () => {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        }
+        
+        // Apply theme
+        const applyTheme = (theme) => {
+            if (theme === 'auto') {
+                const osTheme = getOSPreference()
+                html.setAttribute('data-theme', osTheme)
+            } else {
+                html.setAttribute('data-theme', theme)
+            }
+        }
+        
+        // Update icon based on current theme
+        const updateIcon = (theme) => {
+            if (theme === 'auto') {
+                const osTheme = getOSPreference()
+                if (osTheme === 'dark') {
+                    themeIcon.classList.remove('bi-sun-fill')
+                    themeIcon.classList.add('bi-moon-fill')
+                } else {
+                    themeIcon.classList.remove('bi-moon-fill')
+                    themeIcon.classList.add('bi-sun-fill')
+                }
+            } else if (theme === 'dark') {
+                themeIcon.classList.remove('bi-sun-fill')
+                themeIcon.classList.add('bi-moon-fill')
+            } else {
+                themeIcon.classList.remove('bi-moon-fill')
+                themeIcon.classList.add('bi-sun-fill')
+            }
+        }
+        
+        // Check for saved theme preference or default to 'auto' (OS preference)
+        const savedTheme = localStorage.getItem('theme')
+        const currentTheme = savedTheme || 'auto'
+        
+        applyTheme(currentTheme)
+        updateIcon(currentTheme)
+        
+        // Listen for OS preference changes when in auto mode
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+        const handleOSChange = (e) => {
+            const savedTheme = localStorage.getItem('theme')
+            if (!savedTheme || savedTheme === 'auto') {
+                applyTheme('auto')
+                updateIcon('auto')
+            }
+        }
+        mediaQuery.addEventListener('change', handleOSChange)
+        
+        if (themeToggle) {
+            on('click', '#theme-toggle', function() {
+                const savedTheme = localStorage.getItem('theme') || 'auto'
+                let newTheme
+                
+                // Cycle through: auto -> light -> dark -> auto
+                if (savedTheme === 'auto') {
+                    newTheme = 'light'
+                } else if (savedTheme === 'light') {
+                    newTheme = 'dark'
+                } else {
+                    newTheme = 'auto'
+                }
+                
+                if (newTheme === 'auto') {
+                    localStorage.removeItem('theme') // Remove to default to auto
+                } else {
+                    localStorage.setItem('theme', newTheme)
+                }
+                
+                applyTheme(newTheme)
+                updateIcon(newTheme)
+            })
+        }
+    }
+    
+    // Initialize theme toggle on page load
+    window.addEventListener('load', () => {
+        initThemeToggle()
+    })
 
 })()

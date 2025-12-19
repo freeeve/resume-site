@@ -1,18 +1,23 @@
 <header id="header">
     <div class="d-flex flex-column">
         <div class="profile">
-            <img src="{{ "assets/img/eve-profile.jpeg" | relURL }}" alt="Professional Headshot" class="img-fluid rounded-circle">
-            <h1 class="text-light"><a href="/static">{{ .Site.Params.name }}</a></h1>
-            <div class="social-links mt-3 text-center">
+            {{ partial "picture.html" (dict "src" "assets/img/eve-profile.jpeg" "alt" "Eve Freeman - Lead Software Engineer professional headshot" "class" "img-fluid rounded-circle" "fetchpriority" "high") }}
+            <h1 class="text-light"><a href="/static" aria-label="Home - {{ .Site.Params.name }}">{{ .Site.Params.name }}</a></h1>
+            <div class="social-links mt-3 text-center" role="list" aria-label="Social media links">
                 {{ range .Site.Params.social }}
-                <a href="{{ .url }}" target="_blank" class="{{ .class }}"><i class="{{ .icon }}"></i></a>
+                <a href="{{ .url }}" target="_blank" rel="noopener noreferrer" class="{{ .class }}" aria-label="Visit {{ .class }} profile"><i class="{{ .icon }}" aria-hidden="true"></i></a>
                 {{ end }}
             </div>
+            <div class="theme-toggle mt-3 text-center">
+                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode" title="Toggle dark/light mode">
+                    <i class="bi bi-sun-fill" id="theme-icon" aria-hidden="true"></i>
+                </button>
+            </div>
         </div>
-        <nav id="navbar" class="nav-menu navbar">
-            <ul>
+        <nav id="navbar" class="nav-menu navbar" role="navigation" aria-label="Main navigation">
+            <ul role="list">
                 {{ range .Site.Menus.main }}
-                <li><a href="#{{ .Identifier }}" class="nav-link scrollto"><i class="{{ .Pre }}"></i> <span>{{ .Name }}</span></a></li>
+                <li><a href="#{{ .Identifier }}" class="nav-link scrollto" aria-label="Navigate to {{ .Name }} section"><i class="{{ .Pre }}" aria-hidden="true"></i> <span>{{ .Name }}</span></a></li>
                 {{ end }}
             </ul>
             <br><br><br>

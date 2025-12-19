@@ -1,4 +1,4 @@
-baseURL = 'https://eve.freemaq.org/'
+baseURL = 'https://evefreeman.com/'
 languageCode = 'en-us'
 title = "Eve Freeman's Resume"
 
@@ -64,17 +64,22 @@ name = "Certifications"
 pre = "bx bx-award"
 weight = 6
 [[menu.main]]
+identifier = "stats"
+name = "Community"
+pre = "bx bx-trophy"
+weight = 7
+[[menu.main]]
 identifier = "competencies"
 name = "Specialties"
 pre = "bx bx-star"
-weight = 7
+weight = 8
 [[menu.main]]
 identifier = "contact"
 name = "Contact"
 pre = "bx bx-envelope"
-weight = 8
+weight = 9
 [[menu.main]]
 identifier = "resume"
 name = "Resume"
 pre = "bx bx-file"
-weight = 9
+weight = 10

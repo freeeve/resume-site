@@ -1,8 +1,8 @@
 ---
 Title: "Co-op"
 Dates: "1998-2003 (with gaps)"
-Company: "Noblis"
-weight: 4
+Company: "Mitretek (now Noblis)"
+weight: 5
 ---
 * NCIC 2000 Fingerprinting
 * NOAA Weather Data

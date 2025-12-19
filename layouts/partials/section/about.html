@@ -1,9 +1,9 @@
-<section id="about" class="about">
+<section id="about" class="about" aria-labelledby="about-heading">
     <div class="container">
-        <div class="section-title"><h2>About</h2></div>
+        <div class="section-title"><h2 id="about-heading">About</h2></div>
         <div class="row">
             <div class="col-lg-4" data-aos="fade-right">
-                <img src="assets/img/eve-profile.jpeg" class="img-fluid" alt="Eve's Photo">
+                {{ partial "picture.html" (dict "src" "assets/img/eve-profile.jpeg" "alt" "Eve Freeman - Lead Software Engineer professional headshot" "class" "img-fluid" "loading" "lazy") }}
             </div>
             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
                 <h3>{{ .Site.Params.jobTitle }}</h3>

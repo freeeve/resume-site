@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <img class="school-logo" src="{{ .Params.Img }}" alt="{{ .Params.Institution }}">
+                {{ partial "picture.html" (dict "src" .Params.Img "alt" (printf "%s logo" .Params.institution) "class" "school-logo" "loading" "lazy" "decoding" "async") }}
             </div>
             {{ end }}
             {{ end }}

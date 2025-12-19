@@ -1,0 +1,40 @@
+{{/* 
+  Picture partial with WebP support and fallback
+  Usage: {{ partial "picture.html" (dict "src" "assets/img/image.jpg" "alt" "Description" "class" "img-fluid" "loading" "lazy") }}
+*/}}
+{{ $src := .src }}
+{{ $alt := .alt | default "" }}
+{{ $class := .class | default "" }}
+{{ $loading := .loading | default "lazy" }}
+{{ $decoding := .decoding | default "async" }}
+{{ $fetchpriority := .fetchpriority | default "" }}
+
+{{/* Get the WebP version path */}}
+{{ $webpSrc := replace $src (path.Ext $src) ".webp" }}
+{{ $webpPath := printf "static/%s" $webpSrc }}
+
+{{/* Check if WebP file exists using Hugo's fileExists (checks static directory) */}}
+{{ $webpExists := false }}
+{{ if fileExists $webpPath }}
+    {{ $webpExists = true }}
+{{ end }}
+
+{{ if $webpExists }}
+<picture>
+    <source srcset="{{ $webpSrc | relURL }}" type="image/webp">
+    <img src="{{ $src | relURL }}" 
+         alt="{{ $alt }}" 
+         {{ if $class }}class="{{ $class }}"{{ end }}
+         {{ if $loading }}loading="{{ $loading }}"{{ end }}
+         {{ if $decoding }}decoding="{{ $decoding }}"{{ end }}
+         {{ if $fetchpriority }}fetchpriority="{{ $fetchpriority }}"{{ end }}>
+</picture>
+{{ else }}
+<img src="{{ $src | relURL }}" 
+     alt="{{ $alt }}" 
+     {{ if $class }}class="{{ $class }}"{{ end }}
+     {{ if $loading }}loading="{{ $loading }}"{{ end }}
+     {{ if $decoding }}decoding="{{ $decoding }}"{{ end }}
+     {{ if $fetchpriority }}fetchpriority="{{ $fetchpriority }}"{{ end }}>
+{{ end }}
+

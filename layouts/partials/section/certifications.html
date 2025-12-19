@@ -1,7 +1,7 @@
-<section id="certifications" class="resume">
+<section id="certifications" class="resume" aria-labelledby="certifications-heading">
     <div class="container">
         <div class="section-title">
-            <h2>Certifications</h2>
+            <h2 id="certifications-heading">Certifications</h2>
         </div>
         <div class="row" data-aos="fade-left">
             {{ range where .Site.RegularPages "Section" "certifications" }}
@@ -9,7 +9,18 @@
                 <div class="resume-item">
                     <h4>{{ .Params.issuer }}</h4>
                     {{ range .Params.certs }}
-                    <p><a href="{{ .url }}"><img style="width:100px;" src="{{ .img }}"> {{ .date }}</a></p>
+                    {{ $certTitle := cond (isset . "title") .title (printf "%s Certification" $.Params.issuer) }}
+                    {{ $certAlt := printf "%s badge" $certTitle }}
+                    {{ $imgClass := "cert-image" }}
+                    {{ if or (in .img "scjp") (in .img "java") }}
+                    {{ $imgClass = printf "%s small" $imgClass }}
+                    {{ end }}
+                    <div class="cert-link">
+                        <a href="{{ if .url }}{{ .url }}{{ else }}#{{ end }}" aria-label="{{ $certTitle }} - {{ .date }}">
+                            {{ partial "picture.html" (dict "src" .img "alt" $certAlt "class" $imgClass "loading" "lazy" "decoding" "async") }}
+                            <span>{{ .date }}</span>
+                        </a>
+                    </div>
                     {{ end }}
                     {{ .Content }}
                 </div>

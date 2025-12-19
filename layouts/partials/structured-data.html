@@ -1,0 +1,44 @@
+{{ $baseURL := .Site.BaseURL }}
+{{ $name := .Site.Params.name }}
+{{ $jobTitle := .Site.Params.jobTitle }}
+{{ $email := .Site.Params.email }}
+{{ $location := .Site.Params.location }}
+{{ $social := .Site.Params.social }}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "{{ $name }}",
+  "jobTitle": "{{ $jobTitle }}",
+  "url": "{{ $baseURL }}",
+  "email": "{{ $email }}",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "{{ $location }}"
+  },
+  "sameAs": [
+    {{- range $index, $item := $social -}}
+    {{- if $index }},{{ end -}}
+    "{{ $item.url }}"
+    {{- end -}}
+  ],
+  "image": "{{ $baseURL }}assets/img/eve-profile.jpeg",
+  "description": "{{ with .Params.meta.description }}{{ . | replace "\"" "\\\"" }}{{ else }}Lead Software Engineer specializing in full-stack development, cloud architecture, AI engineering, and FinOps.{{ end }}"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ $name }} - Resume",
+  "url": "{{ $baseURL }}",
+  "author": {
+    "@type": "Person",
+    "name": "{{ $name }}"
+  },
+  "description": "{{ with .Params.meta.description }}{{ . | replace "\"" "\\\"" }}{{ else }}Professional resume and portfolio of {{ $name }}, {{ $jobTitle }}.{{ end }}"
+}
+</script>
+

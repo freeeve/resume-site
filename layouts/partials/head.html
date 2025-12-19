@@ -1,37 +1,122 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>{{ .Title }}</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="language" content="en-US">
+    <meta name="author" content="{{ .Site.Params.name }}">
+    
+    <title>{{ if .IsHome }}{{ .Site.Params.name }} - {{ .Site.Params.jobTitle }}{{ else }}{{ .Title }} - {{ .Site.Params.name }}{{ end }}</title>
+    
+    <!-- Meta Description -->
+    {{ if .Params.meta.description }}
+    <meta name="description" content="{{ .Params.meta.description }}">
+    {{ else }}
+    <meta name="description" content="{{ .Site.Params.name }} - {{ .Site.Params.jobTitle }}. Lead Software Engineer specializing in full-stack development, cloud architecture, AI engineering, and FinOps.">
+    {{ end }}
+    
+    <!-- Keywords -->
+    {{ with .Params.meta.keywords }}
+    <meta name="keywords" content="{{ . }}">
+    {{ end }}
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ .Permalink }}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{{ with .Params.og.type }}{{ . }}{{ else }}website{{ end }}">
+    <meta property="og:url" content="{{ .Permalink }}">
+    <meta property="og:title" content="{{ with .Params.og.title }}{{ . }}{{ else }}{{ if .IsHome }}{{ .Site.Params.name }}{{ else }}{{ .Title }}{{ end }}{{ end }}">
+    <meta property="og:description" content="{{ with .Params.og.description }}{{ . }}{{ else }}{{ with .Params.meta.description }}{{ . }}{{ else }}{{ .Site.Params.name }} - {{ .Site.Params.jobTitle }}{{ end }}{{ end }}">
+    {{ $ogImage := "" }}
+    {{ if .Params.og.image }}
+        {{ $ogImage = .Params.og.image }}
+    {{ else }}
+        {{ $ogImage = "/assets/img/eve-profile.jpeg" }}
+    {{ end }}
+    {{ if not (hasPrefix $ogImage "http") }}
+        {{ $ogImage = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $ogImage) }}
+    {{ end }}
+    <meta property="og:image" content="{{ $ogImage }}">
+    {{ with .Params.og.site_name }}
+    <meta property="og:site_name" content="{{ . }}">
+    {{ end }}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="{{ with .Params.twitter.card }}{{ . }}{{ else }}summary_large_image{{ end }}">
+    <meta name="twitter:url" content="{{ .Permalink }}">
+    <meta name="twitter:title" content="{{ with .Params.twitter.title }}{{ . }}{{ else }}{{ if .IsHome }}{{ .Site.Params.name }}{{ else }}{{ .Title }}{{ end }}{{ end }}">
+    <meta name="twitter:description" content="{{ with .Params.twitter.description }}{{ . }}{{ else }}{{ with .Params.meta.description }}{{ . }}{{ else }}{{ .Site.Params.name }} - {{ .Site.Params.jobTitle }}{{ end }}{{ end }}">
+    {{ $twitterImage := "" }}
+    {{ if .Params.twitter.image }}
+        {{ $twitterImage = .Params.twitter.image }}
+    {{ else }}
+        {{ $twitterImage = "/assets/img/eve-profile.jpeg" }}
+    {{ end }}
+    {{ if not (hasPrefix $twitterImage "http") }}
+        {{ $twitterImage = printf "%s%s" .Site.BaseURL (strings.TrimPrefix "/" $twitterImage) }}
+    {{ end }}
+    <meta name="twitter:image" content="{{ $twitterImage }}">
+    
+    <!-- Additional Meta Tags -->
     {{ with .Params.meta }}
     {{ range $key, $value := . }}
+    {{ if and (ne $key "description") (ne $key "keywords") }}
     <meta name="{{ $key }}" content="{{ $value }}">
     {{ end }}
     {{ end }}
-    <!-- Open Graph / Twitter -->
-    {{ with .Params.og }}
-    {{ range $key, $value := . }}
-    <meta property="og:{{ $key }}" content="{{ $value }}">
     {{ end }}
-    {{ end }}
-    {{ with .Params.twitter }}
-    {{ range $key, $value := . }}
-    <meta property="twitter:{{ $key }}" content="{{ $value }}">
-    {{ end }}
-    {{ end }}
+    <!-- Preload Critical Resources -->
+    <!-- Only preload hero image on desktop (not mobile for better LCP) -->
+    <link rel="preload" href="{{ "assets/img/metallurgy1_thumbnail_980x551.webp" | relURL }}" as="image" type="image/webp" media="(min-width: 769px)">
+    <link rel="preload" href="{{ "assets/img/eve-profile.webp" | relURL }}" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="{{ "assets/fonts/Hermit-Regular.otf" | relURL }}" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="{{ "assets/fonts/Hermit-Bold.otf" | relURL }}" as="font" type="font/otf" crossorigin>
+    
     <!-- Favicons -->
     <link href="{{ "assets/img/eve-profile.jpeg" | relURL }}" rel="icon">
     <link href="{{ "assets/img/BurningGnome.Touch.Icon.png" | relURL }}" rel="apple-touch-icon">
+    
+    <!-- Preconnect to CDN for faster resource loading -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-    <!-- Vendor CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/fontawesome.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.css" rel="stylesheet">
-    <!-- Main CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet"></noscript>
+    <!-- Vendor CSS - Bootstrap is critical for layout, but we can preload and load async -->
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"></noscript>
+    
+    <!-- Icon fonts can be deferred - not needed for initial render -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    
+    <!-- Defer AOS, GLightbox, Swiper, FontAwesome - load asynchronously -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/fontawesome.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.css" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/glightbox@3.2.0/dist/css/glightbox.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/swiper@11.2.6/swiper-bundle.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/fontawesome.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.css" rel="stylesheet">
+    </noscript>
+    <!-- LoadCSS polyfill for async CSS loading -->
+    <script>
+        !function(e){"use strict";var t=function(t,n,o){var i,r=e.document,a=r.createElement("link");if(n)i=n;else{var l=(r.body||r.getElementsByTagName("head")[0]).childNodes;i=l[l.length-1]}var d=r.styleSheets;a.rel="stylesheet",a.href=t,a.media="only x",function e(t){if(r.body)return t();setTimeout(function(){e(t)})}(function(){i.parentNode.insertBefore(a,n?i:i.nextSibling)});var f=function(e){for(var t=a.href,n=d.length;n--;)if(d[n].href===t)return e();setTimeout(function(){f(e)})};return a.addEventListener&&a.addEventListener("load",function(){this.media=o||"all"}),a.onloadcssdefined=f,f(function(){a.media!==o&&(a.media=o||"all")}),a};"undefined"!=typeof exports?exports.loadCSS=t:e.loadCSS=t}("undefined"!=typeof global?global:this);
+    </script>
+    <!-- Main CSS - Critical, load normally but can be inlined for even better performance -->
     <link href="{{ "assets/css/style.css" | relURL }}" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    {{ partial "structured-data.html" . }}
 </head>

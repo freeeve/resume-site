@@ -1,6 +1,13 @@
 <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
     <div class="hero-container" data-aos="fade-in">
-        <h1>{{ .Site.Params.name }}</h1>
-        <p>I am <span class="typed" data-typed-items="{{ range .Site.Params.roles }}{{ . }},{{ end }}"></span><span class="typed-cursor" aria-hidden="true"></span></p>
+        <div class="hero-text">
+            <h1>{{ .Site.Params.name }}</h1>
+            <p>I am&nbsp;<br class="hero-break"><span class="typed-wrapper"><span class="typed" data-typed-items="{{ range .Site.Params.roles }}{{ . }},{{ end }}"></span></span></p>
+        </div>
+        <div class="hero-cta" data-aos="fade-in" data-aos-delay="200">
+            <a href="{{ .Site.Params.resumeLink | relURL }}" class="btn-hero" target="_blank" download aria-label="Download {{ .Site.Params.resumeText }}">
+                <i class="bx bx-download" aria-hidden="true"></i> {{ .Site.Params.resumeText }}
+            </a>
+        </div>
     </div>
 </section>
