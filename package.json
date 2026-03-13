@@ -1,0 +1,13 @@
+{
+  "name": "resume-site",
+  "version": "1.0.0",
+  "description": "PDF generation for resume site",
+  "scripts": {
+    "generate-pdf": "node generate-pdf.js",
+    "generate-pdf:prod": "SITE_URL=https://evefreeman.com node generate-pdf.js"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.15.0"
+  }
+}
+

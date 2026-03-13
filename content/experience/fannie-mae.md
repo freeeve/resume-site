@@ -1,14 +1,18 @@
 ---
 title: "Lead Software Engineer"
-dates: "2016 - Current"
+dates: "Apr 2016 — Present"
 company: "Fannie Mae"
 tech: ["Java", "Python", "Go", "TS", "Rust", "AWS", "Neo4j"]
 weight: 1
 ---
-* **AI Gateway/Control Tower**: Architected and built an enterprise-wide AI request management platform providing observability, cost tracking, and governance across multiple AI providers. Implemented kill switches, rate limiting, and automated cost alerts to prevent budget overruns. Enabled safe AI adoption across teams while maintaining control.
+* **Engineering Leadership**: Led 11 engineers across 3 teams; partnered with product to define and deliver roadmap; set and enforced engineering standards.
 
-* **Data Lineage Platform**: Led migration of data lineage platform from Oracle to Neo4j, improving query performance by 10x+ for complex graph traversals. Continuously optimized Cypher queries and graph structure to handle enterprise-scale data relationships. Reduced infrastructure costs while improving developer experience.
+* **Mentorship & Quality**: Mentored engineers across levels; drove design/code reviews and incident retros; improved quality and delivery predictability.
 
-* **FinOps Leadership**: Championed cost-conscious engineering practices, identifying and implementing optimizations that reduced cloud spend. Established cost monitoring and alerting patterns adopted across multiple teams. Made cost a first-class consideration in technical decision-making.
+* **AI Gateway / Control Tower**: Built an enterprise AI request-management platform across multiple AI providers with observability, cost attribution, and governance controls (kill switches, rate limits, automated cost alerts) to keep usage safe and on budget.
 
-* **Custom Graph Library**: Developed a high-performance, in-memory graph library optimized for specific data lineage use-cases. In some cases an additional 10-20x performance boost over Neo4j stored procedures.
+* **Agentic Engineering**: Designed and built autonomous AI agent workflows to automate complex, multi-step engineering and operational tasks; integrated tool-use patterns and retrieval-augmented context to accelerate delivery and reduce manual work.
+
+* **Data Lineage Platform**: Migrated the lineage platform from Oracle to Neo4j; improved complex graph-traversal query performance 10x+ by optimizing Cypher and the graph model for enterprise-scale relationships; reduced infrastructure costs and improved developer experience.
+
+* **Custom Graph Library**: Built a Java in-memory graph library (Roaring Bitmaps) to offload traversal-heavy logic from Neo4j stored procedures and remove performance bottlenecks.

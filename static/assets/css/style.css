@@ -1248,6 +1248,161 @@ span.tech {
     font-size: .7em;
 }
 
+/* Building Blocks Grid Layout */
+.buildingblocks-category {
+    margin-bottom: 25px;
+}
+
+.buildingblocks-category h5 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 15px;
+    margin-bottom: 0;
+}
+
+.tech-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 2px 8px var(--shadow);
+}
+
+.tech-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-hover);
+    background: var(--bg-tertiary);
+}
+
+.tech-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+}
+
+.tech-item:hover img {
+    filter: grayscale(0%);
+}
+
+/* Tooltip */
+.tech-item::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.tech-item::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-2px);
+    border: 6px solid transparent;
+    border-top-color: var(--text-primary);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.tech-item:hover::before,
+.tech-item:hover::after {
+    opacity: 1;
+}
+
+/* Dark mode tooltip adjustments */
+[data-theme="dark"] .tech-item::before {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+}
+
+[data-theme="dark"] .tech-item::after {
+    border-top-color: var(--text-primary);
+}
+
+/* Dark mode icon inversion for dark icons */
+[data-theme="dark"] .tech-item img[alt="Rust"],
+[data-theme="dark"] .tech-item img[alt="OpenAI"],
+[data-theme="dark"] .tech-item img[alt="GitHub Actions"],
+[data-theme="dark"] .tech-item img[alt="GitLab"],
+[data-theme="dark"] .tech-item img[alt="SonarQube"],
+[data-theme="dark"] .tech-item img[alt="Bedrock"],
+[data-theme="dark"] .tech-item img[alt="S3"],
+[data-theme="dark"] .tech-item img[alt="LangGraph"],
+[data-theme="dark"] .tech-item img[src*="rust"],
+[data-theme="dark"] .tech-item img[src*="openai"],
+[data-theme="dark"] .tech-item img[src*="github"],
+[data-theme="dark"] .tech-item img[src*="gitlab"],
+[data-theme="dark"] .tech-item img[src*="sonarqube"],
+[data-theme="dark"] .tech-item img[src*="bedrock"],
+[data-theme="dark"] .tech-item img[src*="amazons3"],
+[data-theme="dark"] .tech-item img[src*="langgraph"] {
+    filter: invert(1) grayscale(20%);
+}
+
+[data-theme="dark"] .tech-item:hover img[alt="Rust"],
+[data-theme="dark"] .tech-item:hover img[alt="OpenAI"],
+[data-theme="dark"] .tech-item:hover img[alt="GitHub Actions"],
+[data-theme="dark"] .tech-item:hover img[alt="GitLab"],
+[data-theme="dark"] .tech-item:hover img[alt="SonarQube"],
+[data-theme="dark"] .tech-item:hover img[alt="Bedrock"],
+[data-theme="dark"] .tech-item:hover img[alt="S3"],
+[data-theme="dark"] .tech-item:hover img[alt="LangGraph"],
+[data-theme="dark"] .tech-item:hover img[src*="rust"],
+[data-theme="dark"] .tech-item:hover img[src*="openai"],
+[data-theme="dark"] .tech-item:hover img[src*="github"],
+[data-theme="dark"] .tech-item:hover img[src*="gitlab"],
+[data-theme="dark"] .tech-item:hover img[src*="sonarqube"],
+[data-theme="dark"] .tech-item:hover img[src*="bedrock"],
+[data-theme="dark"] .tech-item:hover img[src*="amazons3"],
+[data-theme="dark"] .tech-item:hover img[src*="langgraph"] {
+    filter: invert(1) grayscale(0%);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(auto-fill, minmax(55px, 1fr));
+        gap: 12px;
+    }
+    
+    .tech-item {
+        width: 55px;
+        height: 55px;
+        padding: 8px;
+    }
+}
+
 /* Experience tech tags */
 .resume-item .tech-tags {
     margin-top: 8px;
@@ -1602,6 +1757,10 @@ span.tech {
     nav,
     footer {
         display: none !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        visibility: hidden !important;
     }
 
     /* Adjust main content */
@@ -1650,22 +1809,36 @@ span.tech {
     /* Section styling */
     section {
         page-break-inside: avoid;
-        padding: 15px 0 !important;
-        margin-bottom: 10px;
+        padding: 10px 0 !important;
+        margin-bottom: 5px !important;
+        margin-top: 0 !important;
         display: block !important;
         width: 100% !important;
         orphans: 3;
         widows: 3;
     }
 
-    /* Force page breaks before major sections */
+    /* Only force page breaks if section won't fit on current page */
+    #about {
+        page-break-before: auto;
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+
     #experience,
     #education,
     #projects,
     #certifications,
     #stats,
     #competencies {
-        page-break-before: always;
+        page-break-before: auto;
+    }
+
+    /* Only break if needed to avoid orphaned content */
+    #experience:not(:first-child),
+    #education:not(:first-child),
+    #projects:not(:first-child) {
+        page-break-before: auto;
     }
 
     /* Stats section print styles */
@@ -1953,19 +2126,13 @@ span.tech {
         opacity: 1 !important;
     }
 
-    /* Building blocks content */
-    .buildingblocks,
-    #buildingblocks,
-    section[id="competencies"] .buildingblocks,
-    .services .buildingblocks,
-    #competencies .buildingblocks,
-    .col-lg-12.buildingblocks,
-    div.buildingblocks {
+    /* Building blocks content - new grid layout */
+    .buildingblocks-category {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
         width: 100% !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 15px !important;
         page-break-inside: avoid;
         clear: both;
     }
@@ -1976,46 +2143,68 @@ span.tech {
         visibility: visible !important;
     }
 
-    .buildingblocks h5 {
+    .buildingblocks-category h5 {
         font-size: 10pt;
         font-weight: bold;
-        margin-bottom: 6px;
+        margin-bottom: 8px;
         color: #000;
         display: block !important;
         visibility: visible !important;
     }
 
-    .buildingblocks > span,
-    .buildingblocks span,
-    div.buildingblocks > span,
-    div.buildingblocks span {
+    .tech-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 10px !important;
+        margin-bottom: 10px !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+
+    .tech-item {
         display: inline-block !important;
-        margin-right: 15px;
-        margin-bottom: 10px;
-        vertical-align: top;
+        width: 45px !important;
+        height: 45px !important;
+        padding: 4px !important;
+        margin: 0 !important;
+        background: #f5f5f5 !important;
+        border: 1px solid #ddd !important;
+        border-radius: 6px !important;
         page-break-inside: avoid;
         visibility: visible !important;
         opacity: 1 !important;
+        position: relative !important;
     }
 
-    .buildingblocks img,
-    div.buildingblocks img {
-        display: block !important;
-        margin: 0 auto 5px;
-        max-width: 50px;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-
-    .buildingblocks span span,
-    div.buildingblocks span span {
+    .tech-item::before {
+        content: attr(data-tooltip);
+        position: static !important;
         display: block !important;
         text-align: center;
-        font-size: 7pt;
-        width: 50px;
-        margin: 0;
+        font-size: 6pt;
+        margin-top: 2px;
+        color: #000;
+        opacity: 1 !important;
+        transform: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        white-space: normal !important;
+    }
+
+    .tech-item::after {
+        display: none !important;
+    }
+
+    .tech-item img {
+        display: block !important;
+        width: 100% !important;
+        height: auto !important;
+        max-width: 35px !important;
+        margin: 0 auto !important;
         visibility: visible !important;
         opacity: 1 !important;
+        filter: none !important;
     }
 
     /* Force all elements in competencies section to be visible */

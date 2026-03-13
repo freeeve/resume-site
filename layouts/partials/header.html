@@ -17,7 +17,11 @@
         <nav id="navbar" class="nav-menu navbar" role="navigation" aria-label="Main navigation">
             <ul role="list">
                 {{ range .Site.Menus.main }}
+                {{ if eq .Identifier "resume" }}
+                <li><a href="{{ $.Site.Params.resumeLink | relURL }}" class="nav-link" target="_blank" download aria-label="Download {{ $.Site.Params.resumeText }}"><i class="{{ .Pre }}" aria-hidden="true"></i> <span>{{ .Name }}</span></a></li>
+                {{ else }}
                 <li><a href="#{{ .Identifier }}" class="nav-link scrollto" aria-label="Navigate to {{ .Name }} section"><i class="{{ .Pre }}" aria-hidden="true"></i> <span>{{ .Name }}</span></a></li>
+                {{ end }}
                 {{ end }}
             </ul>
             <br><br><br>

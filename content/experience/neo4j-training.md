@@ -1,11 +1,11 @@
 ---
 title: "Open Source Contributor / Training / Meetup Organizer"
-dates: "2013-2019"
+dates: "2013 — 2019"
 company: "Neo4j (Freelance Contractor / Open Source Contributor)"
-tech: ["Neo4j", "Cypher", "Graph Databases", "Curriculum Development", "Scala"]
+tech: ["Neo4j", "Cypher", "Graph Databases", "Curriculum Development", "Java"]
 weight: 2
 ---
-* **Cypher Language Contributions**: Contributed to Neo4j's Cypher query language during the 2.0 era, implementing several math aggregation functions and the `reduce` operation that are still parts of the language. These contributions are used by developers worldwide in production graph database queries.
+* **Cypher Language Contributions**: Contributed to Neo4j's Cypher query language during the 2.0 era, implementing several math aggregation functions and the reduce function that are still parts of the language. These contributions are used by developers worldwide in production graph database queries.
 
 * **Course Development**: Developed comprehensive curriculum for advanced Cypher course, creating structured learning materials for complex graph query patterns
 

@@ -13,5 +13,7 @@ blocks:
     alt: MongoDB
   - icon: https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg
     alt: Elastic
-weight: 3
+  - icon: https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/amazons3.svg
+    alt: S3
+weight: 5
 ---
